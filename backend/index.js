@@ -12,7 +12,21 @@ app.use(express.json());
 
 app.get("/getNameAndBalance", async (req, res) => {
 
-  return res.status(200).json({});
+  const {userAdress} = req.query ;
+  const response = await Moralis.EvmApi.utils.reunContractFunction({
+    chain : "0x13881" ,
+    address : "0xA56104dBe32190530E8810b898aB810dfa837131",
+    functionName : "getMyName" ,
+    abi : ABI ,
+    params : {_user : userAddress}
+  });
+
+  const jsonResponseName = response.raw;
+  const jsonResponse ={
+    name : jsonResponseName ,
+  }
+
+  return res.status(200).json(jsonResponse);
 });
 
 
